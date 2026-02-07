@@ -4,7 +4,7 @@ project:
   title:        "Test"      # Project title
   author:       "Julian"      # Your name
   discord:      "yjulian"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "counter with 7seg-output"      # One line description of what your project does
+  description:  "counter"      # One line description of what your project does
   language:     "Wokwi" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -30,9 +30,9 @@ pinout:
   uo[1]: "b"
   uo[2]: "c"
   uo[3]: "d"
-  uo[4]: "e"
-  uo[5]: "f"
-  uo[6]: "g"
+  uo[4]: ""
+  uo[5]: ""
+  uo[6]: ""
   uo[7]: ""
 
   # Bidirectional pins
