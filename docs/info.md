@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+Counts up a 4-bit counter and outputs to a 7-seg display
 
 ## How to test
 
-Explain how to use your project
+Press button on pin 1
 
 ## External hardware
 
