@@ -5,7 +5,11 @@
 
 `default_nettype none
 
-module tt_um_yjulian_mima (
+module tt_um_yjulian_mima #(
+    parameter ADDR_WIDTH = 20,
+    parameter DATA_WIDTH = 24,
+    parameter IMM_WIDTH = 16
+) (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -23,5 +27,26 @@ module tt_um_yjulian_mima (
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, clk, rst_n, 1'b0};
+
+  wire [23:0] X;
+  wire [23:0] Y;
+  wire [23:0] Z;
+  wire [3:0] alu_op;
+  wire flag_neg;
+  wire flag_zero;
+
+  // ALU-Instanz
+  mima_alu #(
+      .ADDR_WIDTH(ADDR_WIDTH),
+      .DATA_WIDTH(DATA_WIDTH)
+  ) alu (
+      .clk(clk),
+      .OP(alu_op),
+      .X(X),
+      .Y(Y),
+      .Z(Z),
+      .flag_neg(flag_neg),
+      .flag_zero(flag_zero)
+  );
 
 endmodule
