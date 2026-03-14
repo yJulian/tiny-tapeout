@@ -7,7 +7,7 @@ module decoder (
     output logic peri_en,
     output logic [2:0] imm
 );
-always_ff @(posedge clk) begin
+always_ff @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         we    <= '0;
         alu_en <= '0;

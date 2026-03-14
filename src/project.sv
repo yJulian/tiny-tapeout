@@ -72,7 +72,7 @@ module tt_um_yjulian_mima #(
   periphery periphery (
       .clk(clk),
       .en(peri_en),
-      .rst(rst_n),
+      .rst_n(rst_n),
       .op(imm),
       .data_in(ui_in),
       .addr_A(addr_A),
