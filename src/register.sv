@@ -26,7 +26,7 @@ module register_file #(
     reg [DATA_WIDTH-1:0] registers [0:NUM_REGS-1];
 
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+        if (~rst_n) begin
             integer i;
             for (i = 0; i < NUM_REGS; i = i + 1) begin
                 registers[i] <= {DATA_WIDTH{1'b0}};

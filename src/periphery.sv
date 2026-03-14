@@ -4,7 +4,7 @@ module periphery #(
 (
     input clk,
     input en,
-    input rst,
+    input rst_n,
     input [2:0] op,
     input [DATA_WIDTH-1:0] data_in,
     output reg [2:0] addr_A,
@@ -23,8 +23,8 @@ assign addr_B = _addr_B;
 assign addr_Z = _addr_Z;
 assign addr_oio = _addr_oio;
 
-always @(posedge clk) begin
-    if (rst) begin
+always @(posedge clk or negedge rst_n) begin
+    if (~rst_n) begin
         _addr_A <= 0;
         _addr_B <= 0;
         _addr_Z <= 0;
