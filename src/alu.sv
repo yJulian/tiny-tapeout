@@ -19,7 +19,7 @@ always_ff @(posedge clk) begin
             3'b100: Z <= X ^ Y;
             3'b101: Z <= X << Y;
             3'b110: Z <= X >> Y;
-            3'b111: Z <= (X < Y);
+            3'b111: Z <= 8'(X < Y);
             default: Z <= 0;
         endcase
     end

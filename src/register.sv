@@ -9,6 +9,10 @@ module register_file #(
     input wire [ADDR_WIDTH-1:0] w_addr,
     input wire [DATA_WIDTH-1:0] w_data,
 
+    input wire alu_en,
+    input wire [ADDR_WIDTH-1:0] Z_addr,
+    input wire [DATA_WIDTH-1:0] Z_data,
+
     input wire [ADDR_WIDTH-1:0] r_addr1,
     output wire [DATA_WIDTH-1:0] r_data1,
 
@@ -16,10 +20,7 @@ module register_file #(
     output wire [DATA_WIDTH-1:0] r_data2,
 
     input wire [ADDR_WIDTH-1:0] r_addr3,
-    output wire [DATA_WIDTH-1:0] r_data3,
-
-    input wire [ADDR_WIDTH-1:0] r_addr4,
-    output wire [DATA_WIDTH-1:0] r_data4
+    output wire [DATA_WIDTH-1:0] r_data3
 );
     localparam NUM_REGS = 1 << ADDR_WIDTH;
 
@@ -33,12 +34,13 @@ module register_file #(
             end
         end else if (we) begin
             registers[w_addr] <= w_data;
+        end else if (alu_en) begin
+            registers[Z_addr] <= Z_data;
         end
     end
 
     assign r_data1 = registers[r_addr1];
     assign r_data2 = registers[r_addr2];
     assign r_data3 = registers[r_addr3];
-    assign r_data4 = registers[r_addr4];
 
 endmodule

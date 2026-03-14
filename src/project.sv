@@ -21,7 +21,7 @@ module tt_um_yjulian_mima #(
   assign uio_out = 0;
   assign uio_oe  = 8'b0000_0000;
 
-  wire _unused = &{ena};
+  wire _unused = &{ena, uio_in[7:5]};
 
   wire we;
   wire alu_en;
@@ -63,10 +63,11 @@ module tt_um_yjulian_mima #(
       .r_data1(A),
       .r_addr2(addr_B),
       .r_data2(B),
-      .r_addr3(addr_Z),
-      .r_data3(Z),
-      .r_addr4(addr_oio),
-      .r_data4(oio_out_reg)
+      .r_addr3(addr_oio),
+      .r_data3(oio_out_reg),
+      .alu_en(alu_en),
+      .Z_addr(addr_Z),
+      .Z_data(Z)
   );
 
   periphery periphery (
