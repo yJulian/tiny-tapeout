@@ -6,9 +6,7 @@ module alu #(
     input  wire [2:0] OP,
     input  wire clk,
     input wire en,
-    output logic [DATA_WIDTH-1:0] Z,
-    output logic flag_neg,
-    output logic flag_zero
+    output logic [DATA_WIDTH-1:0] Z
 );
 
 always_ff @(posedge clk) begin
@@ -24,8 +22,6 @@ always_ff @(posedge clk) begin
             3'b111: Z <= (X < Y);
             default: Z <= 0;
         endcase
-        flag_neg  <= Z[DATA_WIDTH-1];
-        flag_zero <= (Z == 0);
     end
 end
 
