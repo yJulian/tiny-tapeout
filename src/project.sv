@@ -86,7 +86,6 @@ module tt_um_yjulian_mima #(
   alu #(
       .DATA_WIDTH(DATA_WIDTH)
   ) alu (
-      .clk(clk),
       .en(alu_en),
       .OP(imm),
       .X(A),
