@@ -5,7 +5,7 @@
 
 `default_nettype none
 
-module tt_um_yjulian_mima #(
+module tt_um_yjulian_alu #(
     parameter DATA_WIDTH = 8
 ) (
     input  wire [7:0] ui_in,    // Dedicated inputs
