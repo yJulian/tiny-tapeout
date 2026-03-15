@@ -1,48 +1,28 @@
-/*
- * Copyright (c) 2024 Your Name
- * SPDX-License-Identifier: Apache-2.0
- */
-
 `default_nettype none
 
 module tt_um_yjulian_alu #(
     parameter DATA_WIDTH = 8
 ) (
-    input  wire [7:0] ui_in,    // Dedicated inputs
-    output wire [7:0] uo_out,   // Dedicated outputs
-    input  wire [7:0] uio_in,   // IOs: Input path
-    output wire [7:0] uio_out,  // IOs: Output path
-    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
-    input  wire       ena,      // always 1 when the design is powered, so you can ignore it
-    input  wire       clk,      // clock
-    input  wire       rst_n     // reset_n - low to reset
+    input  wire [7:0] ui_in,
+    output wire [7:0] uo_out,
+    input  wire [7:0] uio_in,
+    output wire [7:0] uio_out,
+    output wire [7:0] uio_oe,
+    input  wire       ena,
+    input  wire       clk,
+    input  wire       rst_n
 );
+  assign uio_out = 8'b0;
+  assign uio_oe  = 8'b0;
 
-  assign uio_out = 0;
-  assign uio_oe  = 8'b0000_0000;
-
-  wire _unused = &{ena, uio_in[7:5]};
-
-  wire we;
-  wire alu_en;
-  wire peri_en;
+  wire we, alu_en, peri_en;
   wire [2:0] imm;
+  wire [2:0] addr_A, addr_B, addr_Z, addr_oio;
+  wire [DATA_WIDTH-1:0] A, B, Z, r_data_oio;
 
-  wire [2:0] addr_A;
-  wire [2:0] addr_B;
-  wire [2:0] addr_Z;
-  wire [2:0] addr_oio;
+  assign uo_out = r_data_oio;
 
-  wire [DATA_WIDTH-1:0] A;
-  wire [DATA_WIDTH-1:0] B;
-  wire [DATA_WIDTH-1:0] Z;
-  reg [DATA_WIDTH-1:0] oio_out_reg;
-
-  assign uo_out = oio_out_reg;
-
-  decoder decoder (
-      .clk(clk),
-      .rst_n(rst_n),
+  decoder decoder_inst (
       .op(uio_in[4:0]),
       .we(we),
       .alu_en(alu_en),
@@ -53,7 +33,7 @@ module tt_um_yjulian_alu #(
   register_file #(
       .ADDR_WIDTH(3),
       .DATA_WIDTH(DATA_WIDTH)
-  ) register_file (
+  ) register_file_inst (
       .clk(clk),
       .rst_n(rst_n),
       .we(we),
@@ -64,13 +44,13 @@ module tt_um_yjulian_alu #(
       .r_addr2(addr_B),
       .r_data2(B),
       .r_addr3(addr_oio),
-      .r_data3(oio_out_reg),
+      .r_data3(r_data_oio),
       .alu_en(alu_en),
       .Z_addr(addr_Z),
       .Z_data(Z)
   );
 
-  periphery periphery (
+  periphery periphery_inst (
       .clk(clk),
       .en(peri_en),
       .rst_n(rst_n),
@@ -82,15 +62,13 @@ module tt_um_yjulian_alu #(
       .addr_oio(addr_oio)
   );
 
-  // ALU-Instanz
   alu #(
       .DATA_WIDTH(DATA_WIDTH)
-  ) alu (
+  ) alu_inst (
       .en(alu_en),
       .OP(imm),
       .X(A),
       .Y(B),
       .Z(Z)
   );
-
 endmodule
